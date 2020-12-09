@@ -1,0 +1,19 @@
+{
+  "name": "refactoring",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node main.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@babel/cli": "7.12.8",
+    "@babel/core": "7.12.9",
+    "@babel/node": "7.12.6",
+    "@babel/preset-env": "7.12.7",
+    "nodemon": "2.0.6"
+  }
+}

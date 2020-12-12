@@ -2,15 +2,16 @@ import playData from "./plays";
 import invoiceData from "./invoices";
 
 const statement = (invoice, plays) => {
-  let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
-  const format = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format;
+  // format 함수
+  const usd = (aNumber) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(aNumber / 100); // 단위 변환 로직 안으로 이동
+  };
 
   // 연극 데이터 추출 함수
   const playFor = (aPerformance) => {
@@ -54,17 +55,33 @@ const statement = (invoice, plays) => {
     return result;
   };
 
+  // 값 계산 로직 함수
+  const totalVolumeCredist = () => {
+    let result = 0;
+    for (const perf of invoice.performances) {
+      result += volumeCreditsFor(perf);
+    }
+    return result;
+  };
+
+  // 토탈 값 계산 로직 함수
+  const totalAmount = () => {
+    let result = 0;
+    for (const perf of invoice.performances) {
+      result += amountFor(perf);
+    }
+    return result;
+  };
+
   for (const perf of invoice.performances) {
-    volumeCredits += volumeCreditsFor(perf);
     // 청구 내역 출력
-    result += ` ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
+    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
       perf.audience
     }석)\n`;
-    totalAmount += amountFor(perf);
   }
 
-  result += `총액: ${format(totalAmount / 100)}\n`;
-  result += `적립 포인트: ${volumeCredits}점\n`;
+  result += `총액: ${usd(totalAmount())}\n`;
+  result += `적립 포인트: ${totalVolumeCredist()}점\n`; // 변수 인라인
   return result;
 };
 

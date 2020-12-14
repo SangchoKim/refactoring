@@ -51,4 +51,4 @@ const renderHtml = (data) => {
 };
 
 console.log(statement(invoiceData, playData));
-console.log(htmlStatement(invoiceData, playData));
+// console.log(htmlStatement(invoiceData, playData));

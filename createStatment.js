@@ -76,7 +76,7 @@ export default function createStatementData(invoice, plays) {
   const playFor = (aPerformance) => {
     return plays[aPerformance.playID];
   };
-
+  
   // 값 계산 로직 함수
   const totalVolumeCredist = (data) => {
     // for 반목문을 파이프문으로 변경
